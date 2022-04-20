@@ -27,7 +27,5 @@ class ChefsLoginTest < ActionDispatch::IntegrationTest
         assert_not flash.empty?
         assert_select "a[href=?]", login_path, count: 0
         assert_select "a[href=?]", logout_path
-        assert_select "a[href=?]", chef_path(@chef)
-        assert_select "a[href=?]", edit_chef_path(@chef)
     end
 end
