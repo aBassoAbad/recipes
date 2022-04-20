@@ -1,0 +1,49 @@
+<ul class="list-group list-group-flush">
+<% obj.each do |recipe| %>
+
+  <li class="list-group-item">
+    <div class="row center">
+        <section class="center">
+
+            <%= gravatar_for(recipe.chef, size:120) %>
+        </section>
+        <div class="cold-md-8 well">
+            <h4><%=link_to recipe.name, recipe_path(recipe) %></h4>
+            <p><%= truncate(recipe.description, length: 150) %></p>
+
+             <% if recipe.image.attached? %>
+                <%= image_tag url_for(recipe.image), class: "center" %> 
+            <% end %>
+            <% if recipe.ingredients.any? %>
+                <p> Ingredients: <%= render recipe.ingredients %> </p> 
+            <% end %>
+
+            <p>
+                <span class="quiet"><small>Created <%= time_ago_in_words(recipe.created_at) %> ago by 
+                            <%= recipe.chef.chef_name.capitalize %> | <%= pluralize(recipe.comments.count, "Comment") %> </small></span>
+            </p>
+            <p class="center">
+                <%= link_to like_recipe_path(recipe, like: true), method: :post, class: "link" do %>
+                <i class="fa-solid fa-thumbs-up fa-2xl margin20px"></i>
+                <% end %>    
+                <%= link_to like_recipe_path(recipe, like: false), method: :post, class: "link" do %>
+                <i class="fa-solid fa-thumbs-down fa-2xl margin20px"></i>
+                <% end %>
+            </p>
+            <p>
+             <span class="margin25px"><%= recipe.thumbs_up_total %></span><span class="margin25px"><%= recipe.thumbs_down_total %></span>
+            </p> 
+            <% if logged_in? && (current_chef == recipe.chef || current_chef.admin?) %>
+                <div class="recipe-actions">
+                    <%= link_to "Edit this recipe", edit_recipe_path(recipe), class: "btn btn-xs btn-warning" %>
+                    <%= link_to "Delete this recipe", recipe_path(recipe), method: :delete,
+                                            data: {confirm: "Are you sure you want to delete this recipe?"},
+                                            class: "btn btn-xs btn-danger" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    
+<% end %>
+</li>
+</ul>

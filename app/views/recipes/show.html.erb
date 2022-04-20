@@ -1,20 +1,77 @@
-<%= render 'shared/page_title', title: @recipe.name %>
+<%= render "shared/page_title", title: @recipe.name %>
+<div class="card well">
+  <div class="card-body">
+    <h4 class="center description"><strong>Steps: </strong></h4>
+    <hr/>
+    <div class="center">
+    <%= simple_format(@recipe.description) %>
+    <% if @recipe.image.attached? %>
+        <%= image_tag url_for(@recipe.image), class: "center" %> 
+    <% end %>
+    <% if @recipe.ingredients.any? %>
+        <p>Ingredients: <%= render @recipe.ingredients %></p>
+    <% end %>
+    </div>
+    <hr/>
+    <div class="text-rigth">
+        <p class="center"><em>Created by: </em></p>
+        <p class="center">
+            <%= link_to gravatar_for(@recipe.chef), chef_path(@recipe.chef) %>
+        </p>
+        <p class="center">
+            <small><%= @recipe.chef.chef_name.capitalize %></small>
+        </p>
 
-<div class="well col-md-8 col-md-offset-2">
-  <h4 class="center description"><strong>Steps: </strong></h4>
-  <hr />
-  <%= simple_format(@recipe.description) %>
-  <hr />
-  <div class="pull-right">
-    <p class="center">
-      <em>Created by:</em>
-    </p>
-    <p class="center">
-      <%= link_to gravatar_for(@recipe.chef), recipes_path %>
-    </p>
-    <p class="center">
-      <small><%= @recipe.chef.chefname.capitalize %></small>
-      <div class="pull-right"><%= time_ago_in_words(@recipe.created_at) %> ago</div>
+        <p class="center">
+            <%= link_to like_recipe_path(@recipe, like: true), method: :post, class: "link" do %>
+            <i class="fa-solid fa-thumbs-up"></i>
+            <% end %> <%= @recipe.thumbs_up_total %> || 
+            <%= link_to like_recipe_path(@recipe, like: false), method: :post, class: "link" do %>
+            <i class="fa-solid fa-thumbs-down"></i><%= @recipe.thumbs_down_total %>
+            <% end %>
+        </p>
+    </div>
+    <p>
+        <div class="text-right">Created <%= time_ago_in_words(@recipe.created_at) %> ago</div>
     </p>
   </div>
+  <div class="recipe-actions">
+  <% if logged_in? && (current_chef == @recipe.chef || current_chef.admin) %>
+    <%= link_to "Edit this recipe", edit_recipe_path(@recipe), class: "btn btn-xs btn-warning" %>
+    <%= link_to "Delete this recipe", recipe_path(@recipe), method: :delete,
+                                            data: {confirm: "Are you sure you want to delete this recipe?"},
+                                            class: "btn btn-xs btn-danger" %>
+    <% end %>
+    <%= link_to "Return to recipe listing", recipes_path, class: "btn btn-xs btn-primary" %>
+  </div>
 </div>
+
+<% if logged_in? %>
+    <div class="row">
+    <div class="col-md-18 col-md-offset-2">
+        <h3>Comments: </h3><hr/>
+        <%= form_for([@recipe, @comment], remote: true, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+        <div class="form-group">
+            <div class="control-label col-md-2">
+            <%= f.label :description, "Comment" %>
+            </div>
+            <div class="col-md-12">
+            <%= f.text_area :description, rows: 8, class: "form-control", placeholder: "Enter comment here" %>
+            </div>
+        </div>
+        <div class="form-group center">
+            <%= f.submit "Submit comment", class: "btn btn-primary btn-lg btn-xlarge" %>
+        </div>
+        <% end %>
+    </div>
+    </div>
+<% end %>
+
+<% if @recipe.comments.count != 0 %>
+      <h3>Prior Comments: </h3>
+        <div id="messages">
+          <%= render partial: 'comments/comments', object: @comments %>
+  </div>
+<% else %>
+      <h3>No Comments Yet!</h3>
+<% end %>
