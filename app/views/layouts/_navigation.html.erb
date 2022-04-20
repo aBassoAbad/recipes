@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+  <div class="container-fluid">
+    <%= link_to "MyRecipes", root_path, class: "navbar-brand", id: "logo"%>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+        <%= link_to "Home", "/", class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Recipe list", recipes_path, class: "nav-link" %>
+        </li>
+        <% if logged_in?%>
+        <li class="nav-item">
+        <%= link_to "Create new recipe", new_recipe_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "ChefChat", chat_path, class: "nav-link" %>
+        </li>
+        <% end %>
+        <li class="nav-item">
+        <%= link_to "Chefs", chefs_path, class: "nav-link" %>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Ingredients
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><%= link_to "Available ingredients", 
+                                    ingredients_path, class: "dropdown-item" %></li>
+            <li><hr class="dropdown-divider"></li>
+             <% Ingredient.all.each do |ingredient| %>
+                <li><%= link_to ingredient.name.capitalize, 
+                                    ingredient_path(ingredient), class: "dropdown-item" %></li>
+            <% end %>
+            <% if logged_in? && current_chef.admin? %>
+            <li><hr class="dropdown-divider"></li>
+            <li><%= link_to "Create ingredient", new_ingredient_path, class: "dropdown-item"%></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <% if !logged_in?%>
+        <li class="nav-item">
+        <%= link_to "Log in", login_path, class: "nav-link" %>
+        </li>
+        <%else%>
+        <li class="nav-item">
+        <%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %>
+        </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</nav>

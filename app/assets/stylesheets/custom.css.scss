@@ -1,0 +1,169 @@
+#logo{
+    float: left;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#logo:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
+.jumbotron{
+    margin-top: 30px;
+    background-image: asset-url("fondo.jpg");
+    background-size: cover;
+    height: 300px;
+}
+
+.jumbotron h1{
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    font-weight: bold;
+}
+
+.center{
+    text-align: center;
+}
+
+.btn-xlarge{
+    background-color: #142b14;
+    color: #fff;
+}
+
+.btn-xlarge:hover{
+    color: #fff;
+}
+
+.well a{
+    color: #142b14
+}
+
+.colormatch a{
+    color: #142b14
+}
+
+.navbar-custom{
+    background-color: #142b14;
+}
+
+.panel > .panel-heading {
+    color: #142b14;
+}
+
+.recipe-actions{
+    padding-bottom: 50px;
+    a{
+        color: #fff;
+        font-size: 0.75em;
+    }
+}
+
+.listing {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .chef-title a{
+    color: #142b14;
+    font-weight: bold;
+    font-size: 1.25em;
+  }
+
+  .input_checkbox input {
+    width: auto !important;
+  }
+
+  .center-block {
+    float: none;
+  }
+  
+  .chat-container {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 150px;
+    width: 80;
+  }
+  
+  .message-container {
+    .form-control {
+      float: left;
+      width: 80%;
+      height: 54px !important;
+    }
+    .btn {
+      float: right;
+      position: relative;
+      height: 54px !important;
+      width: 18%;
+    }
+  }
+  
+  .message {
+    padding-left: 5px;
+    padding-top: 10px;
+  }
+  
+  .messages {
+    border: 1px solid #eaeaea;
+    height: 16em;
+    position: relative;
+    overflow: auto;
+  }
+  .link{
+      text-decoration: none;
+  }
+
+  .margin20px{
+    margin: 20px;
+  }
+
+  .margin25px{
+    margin: 0 35px;
+  }
+
+
+
+  .pagination a, .pagination span.current, .pagination span.gap {
+    float: left;
+    padding: 0 14px;
+    line-height: 38px;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #DDD;
+    border-left-width: 0;
+    color: #142b14;
+}
+
+  .pagination {
+    border-left: 1px solid #ddd;
+    .first{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .prev {
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .page{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .next{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+    .last{
+        padding : 0;
+        float: none;
+        border: none;
+    }
+}
